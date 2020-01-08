@@ -1,20 +1,30 @@
 import React from 'react';
 import { View, Button, TextInput, StyleSheet } from 'react-native';
+import { Field, reduxForm } from 'redux-form';
 
 
 const Form = (props) => {
+
+  const { handleSubmit } = props;
+
+  const onSubmit = (values) => console.log(values);
+
+  const renderInput = ({ input: { onChange, ...rest }}) => {
+    return <TextInput style={styles.input} onChangeText={onChange} {...rest} />
+  };
+
   return (
     <View style={styles.root}>
-      <TextInput
-        placeholder={'Email'}
-        style={styles.input}
+      <Field
+        name={'email'}
+        component={renderInput}
       />
-      <TextInput
+      <Field
+        name={'password'}
+        component={renderInput}
         secureTextEntry
-        placeholder={'Password'}
-        style={styles.input}
       />
-      <Button title={'Submit'} />
+      <Button title={'Submit'} onPress={handleSubmit(onSubmit)} />
     </View>
   );
 };
@@ -34,4 +44,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Form;
+export default reduxForm('test-form')(Form);
