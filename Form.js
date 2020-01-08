@@ -9,20 +9,26 @@ const Form = (props) => {
 
   const onSubmit = (values) => console.log(values);
 
-  const renderInput = ({ input: { onChange, ...rest }}) => {
-    return <TextInput style={styles.input} onChangeText={onChange} {...rest} />
+  const renderInput = ({ input: { onChange, ...input }, ...rest}) => {
+    return <TextInput style={styles.input} onChangeText={onChange} {...input} {...rest} />
   };
 
   return (
     <View style={styles.root}>
       <Field
         name={'email'}
+        props={{
+          placeholder: 'Email'
+        }}
         component={renderInput}
       />
       <Field
         name={'password'}
+        props={{
+          placeholder: 'Password',
+          secureTextEntry: true
+        }}
         component={renderInput}
-        secureTextEntry
       />
       <Button title={'Submit'} onPress={handleSubmit(onSubmit)} />
     </View>
@@ -44,4 +50,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default reduxForm('test-form')(Form);
+export default reduxForm({form: 'test-form'})(Form);
